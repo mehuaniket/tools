@@ -1,9 +1,9 @@
-**
+
 
 PRIVACY POLICY
 ==============
 
-**
+
 
 **Last updated March 16, 2025**
 
@@ -22,12 +22,12 @@ This Privacy Notice for Kreshimo ("**we**," "**us**," or "**our**"), describes h
 
   
 
-**
+
 
 SUMMARY OF KEY POINTS
 ---------------------
 
-**
+
 
 **_This summary provides key points from our Privacy Notice, but you can find out more details about any of these topics by clicking the link following each key point or by using our_** [**_table of contents_**](#toc) **_below to find the section you are looking for._**
 
@@ -71,12 +71,12 @@ Want to learn more about what we do with any information we collect? [Review th
 
   
 
-**
+
 
 TABLE OF CONTENTS
 -----------------
 
-**
+
 
 [1\. WHAT INFORMATION DO WE COLLECT?](#infocollect)
 
@@ -112,12 +112,12 @@ TABLE OF CONTENTS
 
   
 
-**
+
 
 1\. WHAT INFORMATION DO WE COLLECT?
 -----------------------------------
 
-****
+
 
 ### Personal information you disclose to us
 
@@ -173,7 +173,7 @@ The information we collect includes:
 
   
 
-**
+
 
 2\. HOW DO WE PROCESS YOUR INFORMATION?
 ---------------------------------------
@@ -188,7 +188,7 @@ The information we collect includes:
 
   
 
-**
+
 
 3\. WHAT LEGAL BASES DO WE RELY ON TO PROCESS YOUR INFORMATION?
 ---------------------------------------------------------------
@@ -244,7 +244,6 @@ In some exceptional cases, we may be legally permitted under applicable law to p
 
   
 
-**
 
 4\. WHEN AND WITH WHOM DO WE SHARE YOUR PERSONAL INFORMATION?
 -------------------------------------------------------------
@@ -261,7 +260,7 @@ We may need to share your personal information in the following situations:
 
   
 
-**
+
 
 5\. DO WE USE COOKIES AND OTHER TRACKING TECHNOLOGIES?
 ------------------------------------------------------
@@ -290,7 +289,7 @@ Specific information about how we use such technologies and how you can refuse c
 
   
 
-**
+
 
 6\. HOW LONG DO WE KEEP YOUR INFORMATION?
 -----------------------------------------
@@ -307,7 +306,7 @@ When we have no ongoing legitimate business need to process your personal inform
 
   
 
-**
+
 
 7\. HOW DO WE KEEP YOUR INFORMATION SAFE?
 -----------------------------------------
@@ -320,7 +319,7 @@ We have implemented appropriate and reasonable technical and organizational secu
 
   
 
-**
+
 
 8\. DO WE COLLECT INFORMATION FROM MINORS?
 ------------------------------------------
@@ -333,7 +332,7 @@ We do not knowingly collect, solicit data from, or market to children under 18 y
 
   
 
-**
+
 
 9\. WHAT ARE YOUR PRIVACY RIGHTS?
 ---------------------------------
@@ -368,7 +367,7 @@ If you have questions or comments about your privacy rights, you may email us at
 
   
 
-**
+
 
 10\. CONTROLS FOR DO-NOT-TRACK FEATURES
 ---------------------------------------
@@ -381,7 +380,7 @@ California law requires us to let you know how we respond to web browser DNT sig
 
   
 
-**
+
 
 11\. DO UNITED STATES RESIDENTS HAVE SPECIFIC PRIVACY RIGHTS?
 -------------------------------------------------------------
@@ -619,7 +618,6 @@ If you submit the request through an authorized agent, we may need to collect ad
 
   
 
-**
 
 12\. DO OTHER REGIONS HAVE SPECIFIC PRIVACY RIGHTS?
 ---------------------------------------------------
@@ -666,7 +664,7 @@ Complaints (complete POPIA/PAIA form 5): [PAIAComplaints@inforegulator.org.za](
 
   
 
-**
+
 
 13\. DO WE MAKE UPDATES TO THIS NOTICE?
 ---------------------------------------
@@ -679,7 +677,7 @@ We may update this Privacy Notice from time to time. The updated version will be
 
   
 
-**
+
 
 14\. HOW CAN YOU CONTACT US ABOUT THIS NOTICE?
 ----------------------------------------------
@@ -700,7 +698,6 @@ India
 
   
 
-**
 
 15\. HOW CAN YOU REVIEW, UPDATE, OR DELETE THE DATA WE COLLECT FROM YOU?
 ------------------------------------------------------------------------
