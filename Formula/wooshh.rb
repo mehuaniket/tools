@@ -27,24 +27,17 @@ class Wooshh < Formula
     libexec.install Dir["**/WooshhNotifier.app"].first if OS.mac?
   end
 
-  def post_install
+  def caveats
     return unless OS.mac?
-    return unless (libexec/"WooshhNotifier.app").exist?
 
-    global_app_dir = Pathname("/Applications")
-    user_app_dir = Pathname(Dir.home)/"Applications"
-    source_app = libexec/"WooshhNotifier.app"
+    <<~EOS
+      WooshhNotifier.app is installed to:
+        #{libexec}/WooshhNotifier.app
 
-    begin
-      global_app_dir.mkpath
-      rm_rf global_app_dir/"WooshhNotifier.app"
-      cp_r source_app, global_app_dir
-    rescue
-      opoo "Could not install WooshhNotifier.app to /Applications due to permissions."
-      opoo "Installing WooshhNotifier.app to #{user_app_dir} instead."
-      user_app_dir.mkpath
-      rm_rf user_app_dir/"WooshhNotifier.app"
-      cp_r source_app, user_app_dir
-    end
+      Homebrew formulae cannot write to /Applications during install.
+      Copy it manually with one of:
+        cp -R "#{libexec}/WooshhNotifier.app" "$HOME/Applications/"
+        sudo cp -R "#{libexec}/WooshhNotifier.app" /Applications/
+    EOS
   end
 end
