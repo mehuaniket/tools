@@ -1,0 +1,106 @@
+name: Update wooshh formula
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 3 * * *"
+
+permissions:
+  contents: write
+
+jobs:
+  update-formula:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Fetch latest release and compute checksums
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          export RELEASE_JSON="$(curl -fsSL \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${GH_TOKEN}" \
+            "https://api.github.com/repos/mehuaniket/wooshh/releases/latest")"
+
+          python3 - <<'PY'
+          import hashlib
+          import json
+          import os
+          import re
+          import urllib.request
+          from pathlib import Path
+
+          formula_path = Path("Formula/wooshh.rb")
+          release = json.loads(os.environ["RELEASE_JSON"])
+          tag = release["tag_name"]
+          version = tag.lstrip("v")
+
+          assets = {a["name"]: a["browser_download_url"] for a in release["assets"]}
+          required = {
+              "mac_arm": f"wooshh-bundle-{tag}-aarch64-apple-darwin.tar.gz",
+              "mac_intel": f"wooshh-bundle-{tag}-x86_64-apple-darwin.tar.gz",
+              "linux_intel": f"wooshh-{tag}-x86_64-unknown-linux-gnu.tar.gz",
+          }
+
+          missing = [name for name in required.values() if name not in assets]
+          if missing:
+            raise SystemExit(f"Missing release assets: {', '.join(missing)}")
+
+          def sha256_of_url(url: str) -> str:
+            h = hashlib.sha256()
+            with urllib.request.urlopen(url) as response:
+              while True:
+                chunk = response.read(1024 * 1024)
+                if not chunk:
+                  break
+                h.update(chunk)
+            return h.hexdigest()
+
+          mac_arm_sha = sha256_of_url(assets[required["mac_arm"]])
+          mac_intel_sha = sha256_of_url(assets[required["mac_intel"]])
+          linux_intel_sha = sha256_of_url(assets[required["linux_intel"]])
+
+          content = formula_path.read_text()
+          content = re.sub(r'version ".*"', f'version "{version}"', content, count=1)
+
+          content = re.sub(
+              r'(on_arm do\s+url ")([^"]+)("\s+sha256 ")([^"]+)(")',
+              rf'\1https://github.com/mehuaniket/wooshh/releases/download/v#{{version}}/{required["mac_arm"]}\3{mac_arm_sha}\5',
+              content,
+              count=1,
+              flags=re.MULTILINE,
+          )
+          content = re.sub(
+              r'(on_intel do\s+url ")([^"]+)("\s+sha256 ")([^"]+)(")',
+              rf'\1https://github.com/mehuaniket/wooshh/releases/download/v#{{version}}/{required["mac_intel"]}\3{mac_intel_sha}\5',
+              content,
+              count=1,
+              flags=re.MULTILINE,
+          )
+          content = re.sub(
+              r'(on_linux do\s+on_intel do\s+url ")([^"]+)("\s+sha256 ")([^"]+)(")',
+              rf'\1https://github.com/mehuaniket/wooshh/releases/download/v#{{version}}/{required["linux_intel"]}\3{linux_intel_sha}\5',
+              content,
+              count=1,
+              flags=re.MULTILINE,
+          )
+
+          formula_path.write_text(content)
+          print(f"Updated {formula_path} to {tag}")
+          PY
+
+      - name: Create commit when formula changed
+        run: |
+          set -euo pipefail
+          if git diff --quiet -- Formula/wooshh.rb; then
+            echo "No formula changes detected."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add Formula/wooshh.rb
+          git commit -m "Update wooshh formula to latest release"
+          git push
