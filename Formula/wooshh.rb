@@ -31,8 +31,20 @@ class Wooshh < Formula
     return unless OS.mac?
     return unless (libexec/"WooshhNotifier.app").exist?
 
-    system "/bin/mkdir", "-p", "/Applications"
-    system "/bin/rm", "-rf", "/Applications/WooshhNotifier.app"
-    system "/bin/cp", "-R", (libexec/"WooshhNotifier.app"), "/Applications/"
+    global_app_dir = Pathname("/Applications")
+    user_app_dir = Pathname(Dir.home)/"Applications"
+    source_app = libexec/"WooshhNotifier.app"
+
+    begin
+      global_app_dir.mkpath
+      rm_rf global_app_dir/"WooshhNotifier.app"
+      cp_r source_app, global_app_dir
+    rescue
+      opoo "Could not install WooshhNotifier.app to /Applications due to permissions."
+      opoo "Installing WooshhNotifier.app to #{user_app_dir} instead."
+      user_app_dir.mkpath
+      rm_rf user_app_dir/"WooshhNotifier.app"
+      cp_r source_app, user_app_dir
+    end
   end
 end
