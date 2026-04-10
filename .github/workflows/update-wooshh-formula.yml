@@ -67,22 +67,22 @@ jobs:
           content = re.sub(r'version ".*"', f'version "{version}"', content, count=1)
 
           content = re.sub(
-              r'(on_arm do\s+url ")([^"]+)("\s+sha256 ")([^"]+)(")',
-              rf'\g<1>https://github.com/mehuaniket/wooshh/releases/download/v#{{version}}/{required["mac_arm"]}\g<3>{mac_arm_sha}\g<5>',
+              r'(on_arm do\s+url "[^"]+"\s+sha256 ")([^"]+)(")',
+              rf'\g<1>{mac_arm_sha}\g<3>',
               content,
               count=1,
               flags=re.MULTILINE,
           )
           content = re.sub(
-              r'(on_intel do\s+url ")([^"]+)("\s+sha256 ")([^"]+)(")',
-              rf'\g<1>https://github.com/mehuaniket/wooshh/releases/download/v#{{version}}/{required["mac_intel"]}\g<3>{mac_intel_sha}\g<5>',
+              r'(on_macos do\s+on_arm do\s+url "[^"]+"\s+sha256 "[^"]+"\s+end\s+on_intel do\s+url "[^"]+"\s+sha256 ")([^"]+)(")',
+              rf'\g<1>{mac_intel_sha}\g<3>',
               content,
               count=1,
               flags=re.MULTILINE,
           )
           content = re.sub(
-              r'(on_linux do\s+on_intel do\s+url ")([^"]+)("\s+sha256 ")([^"]+)(")',
-              rf'\g<1>https://github.com/mehuaniket/wooshh/releases/download/v#{{version}}/{required["linux_intel"]}\g<3>{linux_intel_sha}\g<5>',
+              r'(on_linux do\s+on_intel do\s+url "[^"]+"\s+sha256 ")([^"]+)(")',
+              rf'\g<1>{linux_intel_sha}\g<3>',
               content,
               count=1,
               flags=re.MULTILINE,
