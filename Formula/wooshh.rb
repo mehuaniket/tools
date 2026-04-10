@@ -10,8 +10,8 @@ class Wooshh < Formula
     end
 
     on_intel do
-      url "https://github.com/mehuaniket/wooshh/releases/download/v#{version}/wooshh-bundle-v#{version}-x86_64-apple-darwin.tar.gz"
-      sha256 "5dbf6f1cfd55e5a3ddf94e36d40791c3a9ec8977c698420006d630e7e0a65852"
+      url "https://github.com/mehuaniket/wooshh/releases/download/v#{version}/wooshh-v#{version}-x86_64-apple-darwin.tar.gz"
+      sha256 "a518ab7016b7d2e6f178f805f88c16d0eda622838e8812ee1a0fade83364458e"
     end
   end
 
@@ -24,20 +24,30 @@ class Wooshh < Formula
 
   def install
     bin.install Dir["**/wooshh"].first
-    libexec.install Dir["**/WooshhNotifier.app"].first if OS.mac?
+    if OS.mac? && Hardware::CPU.arm?
+      notifier = Dir["**/WooshhNotifier.app"].first
+      libexec.install notifier if notifier
+    end
   end
 
   def caveats
     return unless OS.mac?
 
-    <<~EOS
-      WooshhNotifier.app is installed to:
-        #{libexec}/WooshhNotifier.app
+    if Hardware::CPU.intel?
+      <<~EOS
+        Intel macOS installs the CLI-only artifact for compatibility.
+        WooshhNotifier.app is currently available only in the ARM macOS bundle.
+      EOS
+    else
+      <<~EOS
+        WooshhNotifier.app is installed to:
+          #{libexec}/WooshhNotifier.app
 
-      Homebrew formulae cannot write to /Applications during install.
-      Copy it manually with one of:
-        cp -R "#{libexec}/WooshhNotifier.app" "$HOME/Applications/"
-        sudo cp -R "#{libexec}/WooshhNotifier.app" /Applications/
-    EOS
+        Homebrew formulae cannot write to /Applications during install.
+        Copy it manually with one of:
+          cp -R "#{libexec}/WooshhNotifier.app" "$HOME/Applications/"
+          sudo cp -R "#{libexec}/WooshhNotifier.app" /Applications/
+      EOS
+    end
   end
 end
